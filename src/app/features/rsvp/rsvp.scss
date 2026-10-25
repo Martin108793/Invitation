@@ -1,0 +1,328 @@
+@use 'mixins' as m;
+
+:host {
+  display: block;
+}
+
+.rsvp {
+  background:
+    radial-gradient(70% 50% at 50% 0%, rgba(252, 228, 236, 0.8), transparent 62%),
+    radial-gradient(60% 50% at 8% 100%, rgba(248, 200, 220, 0.35), transparent 65%),
+    var(--blossom);
+}
+
+.rsvp__shell {
+  max-width: 760px;
+}
+
+.rsvp__card {
+  padding: clamp(1.5rem, 5vw, 3rem);
+  background: linear-gradient(170deg, rgba(255, 253, 248, 0.98), rgba(255, 246, 238, 0.96));
+}
+
+.form {
+  display: grid;
+  gap: clamp(1.1rem, 3vw, 1.5rem);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.field__label {
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  padding: 0;
+}
+
+.field__req {
+  color: var(--rose);
+}
+
+.field__optional {
+  text-transform: none;
+  letter-spacing: 0.04em;
+  font-style: italic;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.field__input {
+  width: 100%;
+  padding: 0.8rem 0.95rem;
+  border: 1px solid rgba(176, 141, 87, 0.4);
+  border-radius: 2px;
+  background: rgba(255, 253, 249, 0.9);
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.5;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.field__input::placeholder {
+  color: rgba(107, 75, 85, 0.45);
+  font-style: italic;
+}
+
+.field__input:hover {
+  border-color: rgba(176, 141, 87, 0.65);
+}
+
+.field__input:focus {
+  outline: none;
+  border-color: var(--gold);
+  background: #fffdf8;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.18);
+}
+
+.field__input[aria-invalid='true'] {
+  border-color: #b4534f;
+  box-shadow: 0 0 0 3px rgba(180, 83, 79, 0.12);
+}
+
+.field__select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23B08D57' stroke-width='1.6'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  padding-right: 2.4rem;
+  cursor: pointer;
+}
+
+.field__textarea {
+  resize: vertical;
+  min-height: 6rem;
+}
+
+.field__hint {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  opacity: 0.8;
+}
+
+.field__error {
+  font-size: 0.78rem;
+  color: #a8443f;
+}
+
+/* Choice cards */
+.field--choice {
+  gap: 0.6rem;
+}
+
+.choice-row {
+  display: grid;
+  gap: 0.65rem;
+}
+
+@media (min-width: 560px) {
+  .choice-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.choice {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(176, 141, 87, 0.4);
+  border-radius: 2px;
+  background: rgba(255, 253, 249, 0.85);
+  cursor: pointer;
+  transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.choice:hover {
+  border-color: rgba(176, 141, 87, 0.7);
+}
+
+.choice input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.choice__mark {
+  position: relative;
+  flex: 0 0 auto;
+  width: 1.05rem;
+  height: 1.05rem;
+  border: 1px solid rgba(176, 141, 87, 0.7);
+  border-radius: 50%;
+}
+
+.choice__mark::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: var(--gold);
+  transform: scale(0);
+  transition: transform 0.25s var(--ease-soft);
+}
+
+.choice input:checked + .choice__mark::after {
+  transform: scale(1);
+}
+
+.choice input:focus-visible ~ .choice__mark {
+  outline: 2px solid var(--burgundy);
+  outline-offset: 3px;
+}
+
+.choice.is-active {
+  border-color: var(--gold);
+  background: linear-gradient(160deg, rgba(252, 236, 242, 0.95), rgba(255, 250, 243, 0.95));
+  box-shadow: 0 10px 24px -20px rgba(176, 141, 87, 0.9);
+}
+
+.choice__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.35;
+}
+
+.choice__text strong {
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--burgundy);
+}
+
+.choice__text em {
+  font-size: 0.74rem;
+  font-style: italic;
+  color: var(--ink-soft);
+  opacity: 0.85;
+}
+
+/* Honeypot */
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 1.5px solid rgba(74, 46, 56, 0.35);
+  border-top-color: #4a3416;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.form__error {
+  font-size: 0.85rem;
+  color: #a8443f;
+  text-align: center;
+}
+
+.form__fine,
+.form__note {
+  font-size: 0.76rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.form__note {
+  padding: 0.75rem 0.9rem;
+  border: 1px dashed rgba(176, 141, 87, 0.5);
+  border-radius: 2px;
+  background: rgba(252, 228, 236, 0.35);
+  text-align: left;
+}
+
+.form__note strong {
+  color: var(--burgundy);
+}
+
+/* Confirmation */
+.done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  text-align: center;
+  padding: clamp(0.5rem, 2vw, 1rem) 0;
+}
+
+.done__mark {
+  display: grid;
+  place-items: center;
+  width: 3.4rem;
+  height: 3.4rem;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  color: var(--gold-deep);
+  background: rgba(255, 250, 240, 0.9);
+  animation: pop-in 0.5s var(--ease-out-quint);
+}
+
+@keyframes pop-in {
+  from {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.done__title {
+  font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2.1rem);
+  font-weight: 300;
+  color: var(--burgundy);
+}
+
+.done__summary {
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+.done__message {
+  max-width: 46ch;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+
+.done__quote {
+  margin: 0.25rem 0;
+  padding: 0.75rem 1rem;
+  border-left: 1px solid rgba(176, 141, 87, 0.5);
+  font-style: italic;
+  color: var(--ink-soft);
+  text-align: left;
+  max-width: 44ch;
+}
+
+@include m.reduced-motion {
+  .done__mark {
+    animation: none;
+  }
+}

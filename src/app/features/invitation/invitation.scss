@@ -1,0 +1,634 @@
+@use 'mixins' as m;
+
+:host {
+  display: block;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Inside invitation — traditional Khmer card
+   Palette: antique gold #B88643 · bright gold #D9AD62 · deep gold #8C5D28
+            blush #F8DDE0 · rumduol pink #EBA3B2 · cream #FFF8F0
+            pale pink #FBEAE7 · brown #5B3B2A · highlight #FFFDF9
+   ═══════════════════════════════════════════════════════════ */
+.invite {
+  --k-gold: #b88643;
+  --k-gold-bright: #d9ad62;
+  --k-gold-deep: #8c5d28;
+  --k-blush: #f8dde0;
+  --k-rose: #eba3b2;
+  --k-cream: #fff8f0;
+  --k-pale: #fbeae7;
+  --k-brown: #5b3b2a;
+  --k-white: #fffdf9;
+  --rail-scale: 1;
+
+  position: relative;
+  overflow: clip;
+  isolation: isolate;
+  padding: clamp(6rem, 20vw, 10.5rem) 0 0;
+  color: var(--k-brown);
+  background:
+    radial-gradient(60% 34% at 50% 0%, rgba(235, 163, 178, 0.32), transparent 72%),
+    linear-gradient(180deg, var(--k-pale), #fdf1ee 60%, var(--k-cream));
+}
+
+.invite__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-size: 96px 96px; /* image set inline in the template */
+  opacity: 0.9;
+  mask-image: linear-gradient(180deg, #000, transparent 85%);
+}
+
+.invite__petals {
+  z-index: 1;
+}
+
+.invite__stage {
+  position: relative;
+  z-index: 2;
+  width: min(100% - 1rem, 920px);
+  margin-inline: auto;
+}
+
+/* ── Gable crest over the top border ─────────────────────── */
+.invite__crest {
+  position: absolute;
+  z-index: 8;
+  top: 0;
+  left: 50%;
+  width: min(66%, 520px);
+  height: auto;
+  aspect-ratio: 640 / 240;
+  translate: -50% -81%;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 8px rgba(140, 93, 40, 0.22));
+}
+
+/* ── Card: pale-pink mount with gold double border ───────── */
+.card {
+  position: relative;
+  padding: clamp(1.1rem, 2.6vw, 1.8rem) clamp(0.5rem, 1.6vw, 1.1rem) 0;
+  background:
+    linear-gradient(180deg, rgba(248, 221, 224, 0.75), rgba(251, 234, 231, 0.9) 40%, rgba(251, 234, 231, 0.2)),
+    var(--k-pale);
+  border: 1px solid var(--k-gold);
+  box-shadow:
+    inset 0 0 0 4px var(--k-pale),
+    inset 0 0 0 5px rgba(184, 134, 67, 0.55),
+    0 40px 80px -48px rgba(91, 59, 42, 0.55);
+}
+
+.paper-wrap {
+  position: relative;
+  padding-inline: calc(56px * var(--rail-scale) + 0.35rem);
+}
+
+.rail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: calc(100% / var(--rail-scale));
+  scale: var(--rail-scale);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.rail--l {
+  left: 0;
+  transform-origin: 0 0;
+}
+
+.rail--r {
+  right: 0;
+  transform-origin: 100% 0;
+}
+
+/* ── Paper ───────────────────────────────────────────────── */
+.paper {
+  position: relative;
+  z-index: 2;
+  container-type: inline-size;
+  padding: clamp(2.4rem, 8cqw, 4rem) clamp(1.25rem, 5vw, 3.25rem) clamp(4.5rem, 15cqw, 7.5rem);
+  background:
+    radial-gradient(120% 70% at 50% 0%, rgba(248, 221, 224, 0.55), transparent 62%),
+    radial-gradient(90% 40% at 50% 100%, rgba(248, 221, 224, 0.5), transparent 70%),
+    var(--k-cream);
+  border: 1px solid var(--k-gold);
+  box-shadow:
+    inset 0 0 0 5px var(--k-cream),
+    inset 0 0 0 6px rgba(184, 134, 67, 0.5),
+    inset 0 0 70px rgba(248, 221, 224, 0.75);
+}
+
+.paper__tex {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-size: 96px 96px; /* image set inline in the template */
+  opacity: 0.55;
+  mask-image: radial-gradient(90% 90% at 50% 50%, #000 40%, rgba(0, 0, 0, 0.35));
+}
+
+.paper__corner {
+  position: absolute;
+  z-index: 1;
+  width: clamp(22px, 5.5cqw, 36px);
+  height: auto;
+  aspect-ratio: 1;
+  pointer-events: none;
+}
+
+.paper__corner--tl { top: 7px; left: 7px; }
+.paper__corner--tr { top: 7px; right: 7px; }
+.paper__corner--bl { bottom: 7px; left: 7px; }
+.paper__corner--br { bottom: 7px; right: 7px; }
+
+/* Rumduol sprays hang from the paper corners and sides */
+.flora {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.rum {
+  position: absolute;
+  width: clamp(150px, 50cqw, 400px);
+  height: auto;
+  aspect-ratio: 1;
+}
+
+.rum--tl { top: -4%; left: -7%; }
+.rum--tr { top: -4%; right: -7%; scale: -1 1; }
+.rum--bl,
+.rum--br {
+  width: clamp(120px, 34cqw, 280px);
+  bottom: -5%;
+}
+
+.rum--bl { left: -7%; scale: 1 -1; }
+.rum--br { right: -7%; scale: -1 -1; }
+
+.sprig {
+  position: absolute;
+  top: 38%;
+  width: clamp(44px, 12cqw, 92px);
+  height: auto;
+  aspect-ratio: 200 / 320;
+  opacity: 0.95;
+}
+
+.sprig--l { left: -3%; }
+.sprig--r { right: -3%; scale: -1 1; }
+
+/* ── Text ────────────────────────────────────────────────── */
+.paper__inner {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 34rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.mono {
+  width: clamp(150px, 46cqw, 250px);
+  height: auto;
+  margin-bottom: 0.2rem;
+}
+
+.sep {
+  width: min(100%, 22rem);
+  height: auto;
+  margin-block: clamp(0.8rem, 3cqw, 1.4rem);
+}
+
+.sep--wide {
+  width: min(100%, 26rem);
+  margin-top: 0;
+}
+
+.blessing {
+  font-size: clamp(1.15rem, 5.4cqw, 1.9rem);
+  line-height: 1.85;
+  color: var(--k-brown);
+}
+
+.eyebrow-line {
+  margin-top: 0.2rem;
+  font-size: clamp(0.66rem, 2.2cqw, 0.8rem);
+  font-weight: 600;
+  letter-spacing: 0.4em;
+  margin-right: -0.4em;
+  text-transform: uppercase;
+  color: var(--k-gold-deep);
+}
+
+.lead-in {
+  margin-top: clamp(1rem, 4cqw, 1.6rem);
+  font-size: clamp(0.8rem, 2.5cqw, 0.95rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--k-brown);
+  opacity: 0.88;
+}
+
+.lead-in--sub {
+  margin-top: 0.3rem;
+}
+
+.names {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.1em 0.26em;
+  margin-top: clamp(0.8rem, 3cqw, 1.3rem);
+  font-size: clamp(2.5rem, 12.5cqw, 4.6rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: 0.03em;
+  color: var(--k-brown);
+}
+
+.names:focus {
+  outline: none;
+}
+
+.names:focus-visible {
+  outline: 2px solid var(--k-brown);
+  outline-offset: 6px;
+}
+
+.names__amp {
+  font-size: 0.5em;
+  font-style: italic;
+  @include m.gold-text;
+}
+
+.names-km {
+  margin-top: 0.35rem;
+  font-size: clamp(0.9rem, 3.2cqw, 1.15rem);
+  color: var(--k-gold-deep);
+  letter-spacing: 0.04em;
+}
+
+.families {
+  display: grid;
+  gap: 0.7rem;
+  width: 100%;
+  margin: clamp(1rem, 4cqw, 1.6rem) 0 0;
+  font-size: clamp(0.92rem, 2.8cqw, 1.05rem);
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+@container (min-width: 36rem) {
+  .families {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.families dd {
+  margin: 0;
+}
+
+.when {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.when__day {
+  font-size: clamp(1.35rem, 5.2cqw, 1.9rem);
+  letter-spacing: 0.03em;
+  color: var(--k-brown);
+}
+
+.when__km {
+  margin-top: 0.1rem;
+  font-size: clamp(0.85rem, 3cqw, 1.05rem);
+  color: var(--k-gold-deep);
+}
+
+.when__time {
+  margin-top: 0.5rem;
+  font-size: clamp(0.8rem, 2.6cqw, 0.95rem);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--k-brown);
+}
+
+.when__venue {
+  margin-top: clamp(1.1rem, 4cqw, 1.7rem);
+  font-size: clamp(1.2rem, 4.4cqw, 1.6rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--k-brown);
+}
+
+.when__venue-km {
+  font-size: clamp(0.85rem, 3cqw, 1.05rem);
+  color: var(--k-gold-deep);
+}
+
+.when__address {
+  margin-top: 0.35rem;
+  font-style: normal;
+  font-size: clamp(0.9rem, 2.7cqw, 1rem);
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+/* Programme — kbach rules between the lines */
+.programme {
+  width: 100%;
+}
+
+.programme__title {
+  font-size: clamp(0.66rem, 2.1cqw, 0.78rem);
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  margin-right: -0.3em;
+  text-transform: uppercase;
+  color: var(--k-gold-deep);
+}
+
+.programme__list {
+  margin: 0.9rem 0 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.programme__list li {
+  display: grid;
+  grid-template-columns: 5.2rem 1fr;
+  gap: 0.75rem;
+  align-items: baseline;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid transparent;
+  border-image: linear-gradient(90deg, transparent, rgba(184, 134, 67, 0.55) 18%, rgba(184, 134, 67, 0.55) 82%, transparent) 1;
+}
+
+.programme__list li:last-child {
+  border-bottom: 0;
+}
+
+.programme__time {
+  font-size: 0.86rem;
+  letter-spacing: 0.08em;
+  color: var(--k-gold-deep);
+  font-variant-numeric: tabular-nums;
+}
+
+.programme__name {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+  font-size: clamp(0.92rem, 2.7cqw, 1.02rem);
+  color: var(--k-brown);
+}
+
+.programme__en {
+  font-size: 0.84rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.message {
+  margin-top: clamp(1.2rem, 4cqw, 1.8rem);
+  max-width: 30rem;
+  font-size: clamp(1rem, 3cqw, 1.12rem);
+  font-style: italic;
+  line-height: 1.8;
+  color: var(--k-brown);
+}
+
+.note {
+  margin-top: 0.8rem;
+  max-width: 28rem;
+  font-size: clamp(0.84rem, 2.5cqw, 0.92rem);
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: clamp(1.4rem, 5cqw, 2.1rem);
+}
+
+.actions__btn {
+  min-height: 3rem; /* comfortable tap target */
+  padding-inline: clamp(1.4rem, 5cqw, 2.2rem);
+}
+
+.deadline {
+  margin-top: 0.9rem;
+  font-size: 0.74rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--k-gold-deep);
+}
+
+/* ── Foot: Angkor Wat, lotus and the lower kbach centrepiece ─ */
+.card__foot {
+  position: relative;
+  margin-top: clamp(-1.6rem, -3vw, -0.6rem);
+  pointer-events: none;
+  user-select: none;
+}
+
+.card__foot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* right-hand third = mirrored left third (lotus + leaves) */
+.card__foot-mirror {
+  position: absolute;
+  inset: 0;
+  scale: -1 1;
+  clip-path: inset(0 80% 0 0);
+}
+
+.invite__scroll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  margin: clamp(1rem, 3vw, 1.75rem) auto 0;
+  padding-bottom: clamp(1.25rem, 3vw, 2rem);
+  width: max-content;
+  color: var(--k-gold-deep);
+  font-size: 0.62rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  text-decoration: none;
+  @include m.focus-ring;
+}
+
+.invite__scroll svg {
+  animation: float-soft 2.8s ease-in-out infinite;
+}
+
+/* ── Breakpoints ─────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .invite {
+    --rail-scale: 0.78;
+  }
+}
+
+@media (max-width: 560px) {
+  .invite {
+    --rail-scale: 0.5;
+    padding-top: 27vw;
+  }
+
+  /* side sprigs would touch the address line at this width */
+  .sprig {
+    display: none;
+  }
+
+  .invite__stage {
+    width: 100%;
+  }
+
+  .invite__crest {
+    width: 82%;
+  }
+
+  .programme__list li {
+    grid-template-columns: 4.4rem 1fr;
+    gap: 0.5rem;
+  }
+}
+
+/* Landscape phones: the card simply scrolls; keep ornaments modest. */
+@media (max-height: 520px) and (orientation: landscape) {
+  .invite {
+    padding-top: 3.5rem;
+  }
+
+  .invite__crest {
+    width: min(40%, 300px);
+  }
+}
+
+/* ── Opening sequence — starts when the cover is opened ──── */
+:host-context(.page.is-open) {
+  .card {
+    animation: invite-fade 1.4s ease 0.1s both;
+  }
+
+  .invite__crest {
+    animation: invite-crest 1.6s var(--ease-out-quint) 0.45s both;
+  }
+
+  .rail {
+    animation: invite-fade 1.6s ease 0.6s both;
+  }
+
+  .mono {
+    animation: invite-emblem 1.5s var(--ease-out-quint) 0.7s both;
+  }
+
+  .rum,
+  .sprig {
+    animation: invite-flora 2s ease-out 0.9s both;
+  }
+
+  .rise:not(.mono) {
+    animation: invite-rise 1s var(--ease-out-quint) both;
+    animation-delay: calc(1.1s + var(--i, 0) * 0.09s);
+  }
+}
+
+@keyframes invite-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes invite-crest {
+  from { opacity: 0; scale: 0.9; }
+  to { opacity: 1; scale: 1; }
+}
+
+@keyframes invite-emblem {
+  from { opacity: 0; transform: scale(0.88); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes invite-flora {
+  from { opacity: 0; filter: blur(2px); }
+  to { opacity: 1; filter: none; }
+}
+
+@keyframes invite-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host-context(.page.is-open) {
+    .card,
+    .invite__crest,
+    .rail,
+    .mono,
+    .rum,
+    .sprig,
+    .rise {
+      animation: none;
+    }
+  }
+
+  .invite__scroll svg {
+    animation: none;
+  }
+}
+
+/* ── Khmer reading mode: wider time column, larger small print ── */
+:host-context(html[lang='km']) {
+  .programme__list li {
+    grid-template-columns: 6.6rem 1fr;
+  }
+
+  .eyebrow-line,
+  .deadline,
+  .programme__title {
+    font-size: clamp(0.85rem, 2.8cqw, 0.98rem);
+  }
+
+  .lead-in {
+    font-size: clamp(0.92rem, 2.9cqw, 1.05rem);
+  }
+
+  .when__time {
+    font-size: clamp(0.95rem, 3cqw, 1.1rem);
+  }
+
+  .note,
+  .programme__time {
+    font-size: clamp(0.92rem, 2.8cqw, 1rem);
+  }
+}
+
+@media (max-width: 560px) {
+  :host-context(html[lang='km']) .programme__list li {
+    grid-template-columns: 5.6rem 1fr;
+    gap: 0.4rem;
+  }
+}

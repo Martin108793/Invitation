@@ -1,0 +1,30 @@
+<div class="cover__aura" aria-hidden="true"></div>
+
+<article class="card">
+  <app-invitation-frame class="card__frame" [intro]="true">
+    <div class="card__body">
+      <p class="card__blessing khmer-display rise" style="--i: 0">{{ w.messages.khmerBlessing }}</p>
+      <p class="card__eyebrow rise" style="--i: 1">{{ w.messages.weddingInvitation }}</p>
+
+      <h1 class="card__names display rise" style="--i: 2" id="cover-names">
+        <span>{{ w.couple.groom.name }}</span>
+        <span class="card__amp" aria-hidden="true">{{ w.monogram.separator }}</span>
+        <span class="sr-only">{{ lg.t('inv.and') }}</span>
+        <span>{{ w.couple.bride.name }}</span>
+      </h1>
+
+      <div class="card__rule rise" style="--i: 3" aria-hidden="true"><span></span></div>
+
+      <p class="card__date rise" style="--i: 4">{{ w.details.shortDate }}</p>
+      <p class="card__place rise" style="--i: 5">{{ w.venue.name }} · {{ lg.t('inv.city') }}</p>
+
+      <button type="button" class="btn btn--gold card__cta rise" style="--i: 6" (click)="openInvitation()">
+        {{ w.messages.openButton }}
+      </button>
+
+      <p class="card__hint rise" style="--i: 7">{{ w.messages.coverHint }}</p>
+    </div>
+  </app-invitation-frame>
+
+  <div class="card__flash" aria-hidden="true"></div>
+</article>

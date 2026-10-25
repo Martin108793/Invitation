@@ -1,0 +1,83 @@
+<section class="section section--rose gallery" id="gallery" aria-labelledby="gallery-title">
+  <div class="shell">
+    <app-section-heading
+      [eyebrow]="lg.t('gal.eyebrow')"
+      khmerTitle="រូបភាពអនុស្សាវរីយ៍"
+      [title]="lg.t('gal.title')"
+      titleId="gallery-title"
+      [subtitle]="lg.t('gal.subtitle')"
+      divider="blossom"
+    />
+
+    <ul class="grid">
+      @for (image of images; track image.src; let i = $index) {
+        <li class="grid__item" [class.grid__item--feature]="i % 4 === 0" appReveal [revealDelay]="(i % 3) * 70">
+          <button class="tile" type="button" (click)="open(i, $event)" [attr.aria-label]="lg.t('gal.enlarge', { caption: image.caption })">
+            <img
+              [src]="image.src"
+              [attr.srcset]="image.srcset"
+              sizes="(min-width: 1024px) 42vw, (min-width: 640px) 46vw, 92vw"
+              [attr.width]="image.width"
+              [attr.height]="image.height"
+              [alt]="image.alt"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="tile__veil" aria-hidden="true"></span>
+            <span class="tile__caption">{{ image.caption }}</span>
+            <span class="tile__zoom" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.4">
+                <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" stroke-linecap="round" />
+              </svg>
+            </span>
+          </button>
+        </li>
+      }
+    </ul>
+  </div>
+</section>
+
+@if (activeImage(); as image) {
+  <div
+    class="lightbox"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="lg.t('gal.viewer')"
+    (click)="onBackdrop($event)"
+    (touchstart)="onTouchStart($event)"
+    (touchend)="onTouchEnd($event)"
+  >
+    <div class="lightbox__bar">
+      <p class="lightbox__count">
+        {{ lg.num(activeIndex()! + 1) }} <span>/</span> {{ lg.num(images.length) }}
+      </p>
+      <button #closeButton type="button" class="lightbox__button" (click)="close()" [attr.aria-label]="lg.t('gal.close')">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round" />
+        </svg>
+      </button>
+    </div>
+
+    <figure class="lightbox__figure">
+      <img
+        [src]="fullSrc(image)"
+        [attr.width]="image.width"
+        [attr.height]="image.height"
+        [alt]="image.alt"
+        decoding="async"
+      />
+      <figcaption>{{ image.caption }}</figcaption>
+    </figure>
+
+    <button type="button" class="lightbox__nav lightbox__nav--prev" (click)="previous()" [attr.aria-label]="lg.t('gal.prev')">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.4">
+        <path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+    <button type="button" class="lightbox__nav lightbox__nav--next" (click)="next()" [attr.aria-label]="lg.t('gal.next')">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.4">
+        <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+  </div>
+}

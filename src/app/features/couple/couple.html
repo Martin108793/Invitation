@@ -1,0 +1,78 @@
+<section class="section section--rose couple" id="couple" aria-labelledby="couple-title">
+  <div class="shell">
+    <app-section-heading
+      [eyebrow]="lg.t('couple.eyebrow')"
+      khmerTitle="គូស្វាមីភរិយា"
+      [title]="lg.t('couple.title')"
+      titleId="couple-title"
+      [subtitle]="lg.t('couple.subtitle')"
+      divider="lotus"
+    />
+
+    <div class="couple__grid">
+      <article class="portrait" appReveal>
+        <div class="portrait__frame">
+          <span class="portrait__hairline" aria-hidden="true"></span>
+          <img
+            class="portrait__img"
+            [src]="w.couple.groom.photo.src"
+            [attr.srcset]="w.couple.groom.photo.srcset"
+            sizes="(min-width: 900px) 34vw, 88vw"
+            [attr.width]="w.couple.groom.photo.width"
+            [attr.height]="w.couple.groom.photo.height"
+            [alt]="w.couple.groom.name + ', ' + w.couple.groom.roleLabel"
+            loading="lazy"
+            decoding="async"
+          />
+          <span class="portrait__bloom" aria-hidden="true"></span>
+        </div>
+
+        <div class="portrait__text">
+          <p class="portrait__role">{{ w.couple.groom.roleLabel }}</p>
+          <h3 class="portrait__name display">{{ w.couple.groom.name }}</h3>
+          @if (w.couple.groom.nameKm && !lg.isKm()) {
+            <p class="portrait__name-km khmer">{{ w.couple.groom.nameKm }}</p>
+          }
+          <p class="portrait__family">{{ w.couple.groom.familyLine }}</p>
+          <p class="portrait__bio">{{ w.couple.groom.bio }}</p>
+        </div>
+      </article>
+
+      <div class="couple__and" aria-hidden="true">
+        <span class="couple__and-line"></span>
+        <span class="couple__and-mark">&amp;</span>
+        <span class="couple__and-line"></span>
+      </div>
+
+      <article class="portrait portrait--bride" appReveal [revealDelay]="120">
+        <div class="portrait__frame">
+          <span class="portrait__hairline" aria-hidden="true"></span>
+          <img
+            class="portrait__img"
+            [src]="w.couple.bride.photo.src"
+            [attr.srcset]="w.couple.bride.photo.srcset"
+            sizes="(min-width: 900px) 34vw, 88vw"
+            [attr.width]="w.couple.bride.photo.width"
+            [attr.height]="w.couple.bride.photo.height"
+            [alt]="w.couple.bride.name + ', ' + w.couple.bride.roleLabel"
+            loading="lazy"
+            decoding="async"
+          />
+          <span class="portrait__bloom" aria-hidden="true"></span>
+        </div>
+
+        <div class="portrait__text">
+          <p class="portrait__role">{{ w.couple.bride.roleLabel }}</p>
+          <h3 class="portrait__name display">{{ w.couple.bride.name }}</h3>
+          @if (w.couple.bride.nameKm && !lg.isKm()) {
+            <p class="portrait__name-km khmer">{{ w.couple.bride.nameKm }}</p>
+          }
+          <p class="portrait__family">{{ w.couple.bride.familyLine }}</p>
+          <p class="portrait__bio">{{ w.couple.bride.bio }}</p>
+        </div>
+      </article>
+    </div>
+
+    <p class="couple__story" appReveal>{{ w.couple.story }}</p>
+  </div>
+</section>

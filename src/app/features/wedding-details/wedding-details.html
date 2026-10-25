@@ -1,0 +1,76 @@
+<section class="section section--tint details" id="details" aria-labelledby="details-title">
+  <div class="shell">
+    <app-section-heading
+      [eyebrow]="lg.t('det.eyebrow')"
+      khmerTitle="ពិធីមង្គលការ"
+      [title]="lg.t('det.title')"
+      titleId="details-title"
+      [subtitle]="lg.t('det.subtitle')"
+      divider="diamond"
+    />
+
+    <div class="details__grid">
+      <!-- Date card -->
+      <article class="date-card panel panel--corners" appReveal>
+        <p class="eyebrow">{{ lg.t('det.save') }}</p>
+
+        <p class="date-card__weekday">{{ dateParts().weekday }}</p>
+        <p class="date-card__day">{{ dateParts().day }}</p>
+        <p class="date-card__month">{{ dateParts().month }} {{ dateParts().year }}</p>
+        @if (!lg.isKm()) {
+          <p class="date-card__km khmer">{{ w.details.dateLabelKm }}</p>
+        }
+
+        <div class="rule-lozenges date-card__rule" aria-hidden="true"><span></span></div>
+
+        <dl class="date-card__list">
+          <div>
+            <dt>{{ lg.t('det.ceremony') }}</dt>
+            <dd>{{ w.details.timeLabel }}</dd>
+          </div>
+          <div>
+            <dt>{{ lg.t('det.venue') }}</dt>
+            <dd>{{ w.venue.name }}</dd>
+          </div>
+          <div>
+            <dt>{{ lg.t('det.address') }}</dt>
+            <dd>{{ w.venue.addressLine1 }}, {{ w.venue.addressLine2 }}</dd>
+          </div>
+        </dl>
+      </article>
+
+      <!-- Countdown -->
+      <article class="countdown panel" appReveal [revealDelay]="140">
+        @if (!isPast()) {
+          <p class="eyebrow">{{ w.details.countdownTitle }}</p>
+
+          <p class="countdown__target">
+            {{ lg.t('det.until', { date: w.details.dateLabel, time: w.details.timeLabel }) }}
+          </p>
+
+          <div
+            class="countdown__units"
+            role="timer"
+            aria-live="off"
+            [attr.aria-label]="lg.t('det.timer')"
+          >
+            @for (unit of units(); track unit.label) {
+              <div class="countdown__unit">
+                <span class="countdown__value">{{ unit.value }}</span>
+                <span class="countdown__label">{{ unit.label }}</span>
+              </div>
+            }
+          </div>
+
+          <p class="countdown__note">{{ w.venue.ceremonyNote }}</p>
+        } @else {
+          <div class="countdown__done">
+            <p class="eyebrow">{{ lg.t('det.thanks') }}</p>
+            <h3 class="display">{{ doneTitle() }}</h3>
+            <p class="countdown__note">{{ w.details.countdownDoneMessage }}</p>
+          </div>
+        }
+      </article>
+    </div>
+  </div>
+</section>

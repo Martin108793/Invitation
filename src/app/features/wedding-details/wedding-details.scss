@@ -1,0 +1,167 @@
+@use 'mixins' as m;
+
+:host {
+  display: block;
+}
+
+.details__grid {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+@media (min-width: 900px) {
+  .details__grid {
+    grid-template-columns: 0.95fr 1.05fr;
+    align-items: stretch;
+  }
+}
+
+/* ── Date card ───────────────────────────────────────────── */
+.date-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.55rem;
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(255, 253, 248, 0.98), rgba(255, 244, 236, 0.95));
+}
+
+.date-card__weekday {
+  font-size: 0.66rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+.date-card__day {
+  font-family: var(--font-serif);
+  font-size: clamp(4rem, 2.4rem + 6vw, 6rem);
+  font-weight: 300;
+  line-height: 0.95;
+  color: var(--burgundy);
+}
+
+.date-card__month {
+  font-size: clamp(0.72rem, 0.66rem + 0.24vw, 0.82rem);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+.date-card__km {
+  margin-top: 0.35rem;
+  font-size: clamp(0.86rem, 0.8rem + 0.25vw, 0.98rem);
+  color: var(--ink-soft);
+  line-height: 1.9;
+}
+
+.date-card__rule {
+  width: 100%;
+  margin-block: clamp(1rem, 3vw, 1.4rem);
+}
+
+.date-card__list {
+  display: grid;
+  gap: 0.95rem;
+  width: 100%;
+  margin: 0;
+}
+
+.date-card__list dt {
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 0.15rem;
+}
+
+.date-card__list dd {
+  margin: 0;
+  font-size: 0.98rem;
+  color: var(--ink);
+  line-height: 1.55;
+}
+
+/* ── Countdown ───────────────────────────────────────────── */
+.countdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: clamp(1rem, 3vw, 1.5rem);
+  padding: clamp(1.75rem, 4vw, 3rem);
+  background:
+    radial-gradient(90% 70% at 50% 0%, rgba(252, 228, 236, 0.85), rgba(255, 250, 243, 0.92) 62%),
+    var(--blossom);
+}
+
+.countdown__target {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+.countdown__units {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(0.4rem, 1.5vw, 1rem);
+  width: 100%;
+}
+
+.countdown__unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: clamp(0.7rem, 2vw, 1.1rem) 0.25rem;
+  border: 1px solid rgba(176, 141, 87, 0.32);
+  border-radius: 3px;
+  background: rgba(255, 253, 248, 0.75);
+}
+
+.countdown__value {
+  font-family: var(--font-serif);
+  font-size: clamp(1.55rem, 1.1rem + 2.2vw, 2.4rem);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--burgundy);
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown__label {
+  font-size: clamp(0.5rem, 0.46rem + 0.2vw, 0.58rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+.countdown__note {
+  max-width: 42ch;
+  font-size: 0.92rem;
+  line-height: 1.8;
+  color: var(--ink-soft);
+}
+
+.countdown__done h3 {
+  font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2rem);
+  font-weight: 300;
+  color: var(--burgundy);
+  margin-block: 0.5rem;
+}
+
+@media (max-width: 420px) {
+  .countdown__target {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+.countdown__units {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

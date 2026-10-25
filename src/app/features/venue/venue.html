@@ -1,0 +1,82 @@
+<section class="section venue" id="venue" aria-labelledby="venue-title">
+  <div class="shell">
+    <app-section-heading
+      [eyebrow]="lg.t('ven.eyebrow')"
+      khmerTitle="ទីតាំងមង្គលការ"
+      [title]="lg.t('ven.title')"
+      titleId="venue-title"
+      [subtitle]="lg.t('ven.subtitle')"
+      divider="diamond"
+    />
+
+    <div class="venue__grid">
+      <figure class="venue__media" appReveal>
+        <img
+          [src]="w.venue.photo.src"
+          [attr.srcset]="w.venue.photo.srcset"
+          sizes="(min-width: 960px) 54vw, 92vw"
+          [attr.width]="w.venue.photo.width"
+          [attr.height]="w.venue.photo.height"
+          [alt]="w.venue.photo.alt"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption class="venue__badge">
+          <span class="venue__badge-km khmer">{{ w.venue.nameKm }}</span>
+          <span class="venue__badge-en">{{ w.venue.ceremonyTime }}</span>
+        </figcaption>
+      </figure>
+
+      <div class="venue__panel" appReveal [revealDelay]="120">
+        <h3 class="venue__name display">{{ w.venue.name }}</h3>
+
+        <address class="venue__address">
+          {{ w.venue.addressLine1 }}<br />
+          {{ w.venue.addressLine2 }}
+        </address>
+
+        <ul class="venue__facts">
+          <li>
+            <span class="venue__fact-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 7v5l3.5 2" stroke-linecap="round" />
+              </svg>
+            </span>
+            <span>
+              <strong>{{ lg.t('ven.ceremony') }}</strong>
+              {{ w.venue.ceremonyTime }}
+            </span>
+          </li>
+          <li>
+            <span class="venue__fact-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4">
+                <path d="M12 21s7-6.1 7-11a7 7 0 10-14 0c0 4.9 7 11 7 11Z" stroke-linejoin="round" />
+                <circle cx="12" cy="10" r="2.6" />
+              </svg>
+            </span>
+            <span>
+              <strong>{{ lg.t('ven.address') }}</strong>
+              {{ w.venue.addressLine2 }}
+            </span>
+          </li>
+        </ul>
+
+        <p class="venue__note">{{ w.venue.ceremonyNote }}</p>
+
+        <a
+          class="btn venue__cta"
+          [href]="w.venue.directionsUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+            <path d="M12 21s7-6.1 7-11a7 7 0 10-14 0c0 4.9 7 11 7 11Z" stroke-linejoin="round" />
+            <circle cx="12" cy="10" r="2.6" />
+          </svg>
+          {{ lg.t('ven.directions') }}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

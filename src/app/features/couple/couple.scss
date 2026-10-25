@@ -1,0 +1,184 @@
+@use 'mixins' as m;
+
+:host {
+  display: block;
+}
+
+.couple {
+  background:
+    radial-gradient(70% 50% at 50% 0%, rgba(255, 253, 248, 0.9), transparent 60%),
+    radial-gradient(60% 50% at 6% 100%, rgba(248, 200, 220, 0.45), transparent 65%),
+    radial-gradient(60% 50% at 94% 90%, rgba(252, 228, 236, 0.6), transparent 65%),
+    var(--blossom);
+}
+
+.couple__grid {
+  display: grid;
+  gap: clamp(2rem, 5vw, 3rem);
+  align-items: start;
+}
+
+@media (min-width: 880px) {
+  .couple__grid {
+    grid-template-columns: 1fr auto 1fr;
+    gap: clamp(1.5rem, 3.5vw, 3.25rem);
+    align-items: center;
+  }
+}
+
+.portrait {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.15rem;
+}
+
+.portrait__frame {
+  position: relative;
+  width: min(100%, 340px);
+  padding: 10px;
+  border-radius: 50% 50% 8px 8px / 26% 26% 8px 8px;
+  background: linear-gradient(150deg, #f6e8c3, #d9bb70 30%, #b08d57 58%, #f0e2b4 100%);
+  box-shadow:
+    0 0 0 1px rgba(176, 141, 87, 0.45),
+    0 24px 50px -30px rgba(112, 47, 69, 0.55);
+  transition: transform 0.7s var(--ease-out-quint), box-shadow 0.7s var(--ease-soft);
+}
+
+.portrait__frame:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 0 0 1px rgba(176, 141, 87, 0.55),
+    0 32px 60px -30px rgba(112, 47, 69, 0.5);
+}
+
+.portrait__hairline {
+  position: absolute;
+  inset: 6px;
+  z-index: 2;
+  border: 1px solid rgba(255, 253, 246, 0.85);
+  border-radius: 50% 50% 5px 5px / 26% 26% 5px 5px;
+  pointer-events: none;
+}
+
+.portrait__img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 16%;
+  border-radius: 50% 50% 4px 4px / 26% 26% 4px 4px;
+  filter: saturate(0.98) contrast(1.01);
+}
+
+.portrait__bloom {
+  position: absolute;
+  left: 50%;
+  bottom: -14px;
+  z-index: 3;
+  width: 62px;
+  height: 42px;
+  translate: -50% 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 62 42'%3E%3Cg fill='%23FCE4EC' stroke='%23E8A0BF' stroke-width='0.8'%3E%3Cpath d='M31 34c-7-4-11-11-10-19 7 4 10 11 10 19Z'/%3E%3Cpath d='M31 34c7-4 11-11 10-19-7 4-10 11-10 19Z'/%3E%3Cpath d='M31 34c-4-6-5-14-1-21 4 7 4 15 1 21Z'/%3E%3C/g%3E%3C/svg%3E")
+    center / contain no-repeat;
+  filter: drop-shadow(0 4px 6px rgba(112, 47, 69, 0.18));
+}
+
+.portrait__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  max-width: 34ch;
+}
+
+.portrait__role {
+  font-size: 0.62rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+.portrait__name {
+  font-size: clamp(1.9rem, 1.5rem + 1.6vw, 2.5rem);
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--burgundy);
+}
+
+.portrait__name-km {
+  font-size: 0.95rem;
+  color: var(--gold-deep);
+  line-height: 1.4;
+}
+
+.portrait__family {
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.portrait__bio {
+  margin-top: 0.35rem;
+  font-size: 0.94rem;
+  line-height: 1.75;
+  color: var(--ink-soft);
+}
+
+.couple__and {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  color: var(--gold-deep);
+}
+
+@media (min-width: 880px) {
+  .couple__and {
+    flex-direction: column;
+    height: 100%;
+    padding-top: 1rem;
+  }
+}
+
+.couple__and-line {
+  flex: 1;
+  width: 1px;
+  min-height: 28px;
+  max-height: 120px;
+  background: linear-gradient(180deg, transparent, rgba(176, 141, 87, 0.6), transparent);
+}
+
+@media (max-width: 879px) {
+  .couple__and-line {
+    width: auto;
+    height: 1px;
+    min-height: 0;
+    min-width: 40px;
+    max-height: none;
+    background: linear-gradient(90deg, transparent, rgba(176, 141, 87, 0.6), transparent);
+  }
+}
+
+.couple__and-mark {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(2rem, 1.6rem + 1.6vw, 2.8rem);
+  line-height: 1;
+  @include m.gold-text;
+}
+
+.couple__story {
+  max-width: 62ch;
+  margin: clamp(2.25rem, 6vw, 3.5rem) auto 0;
+  padding-top: clamp(1.5rem, 4vw, 2.25rem);
+  border-top: 1px solid rgba(176, 141, 87, 0.25);
+  text-align: center;
+  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.1rem);
+  font-style: italic;
+  line-height: 1.9;
+  color: var(--ink-soft);
+}

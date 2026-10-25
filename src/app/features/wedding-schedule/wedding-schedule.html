@@ -1,0 +1,31 @@
+<section class="section schedule" id="schedule" aria-labelledby="schedule-title">
+  <div class="shell">
+    <app-section-heading
+      [eyebrow]="lg.t('sch.eyebrow')"
+      khmerTitle="កម្មវិធីមង្គលការ"
+      [title]="lg.t('sch.title')"
+      titleId="schedule-title"
+      [subtitle]="lg.t('sch.subtitle')"
+      divider="blossom"
+    />
+
+    <ol class="timeline">
+      @for (event of events; track event.id; let i = $index) {
+        <li class="timeline__item" [class.timeline__item--right]="i % 2 === 1">
+          <div class="timeline__marker" aria-hidden="true">
+            <app-ritual-symbol [name]="event.symbol" />
+          </div>
+
+          <div class="timeline__card" appReveal [revealDelay]="60">
+            <p class="timeline__time">{{ event.time }}</p>
+            <h3 class="timeline__name khmer-display">{{ event.nameKm }}</h3>
+            @if (event.nameEn) {
+              <p class="timeline__en">{{ event.nameEn }}</p>
+            }
+            <p class="timeline__desc">{{ event.description }}</p>
+          </div>
+        </li>
+      }
+    </ol>
+  </div>
+</section>

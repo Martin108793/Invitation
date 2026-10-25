@@ -1,0 +1,136 @@
+@use 'mixins' as m;
+
+:host {
+  display: block;
+}
+
+.schedule {
+  background:
+    radial-gradient(70% 44% at 50% 0%, rgba(252, 228, 236, 0.62), transparent 62%),
+    linear-gradient(180deg, #fff7ee 0%, var(--ivory) 100%);
+}
+
+.timeline {
+  position: relative;
+  display: grid;
+  gap: clamp(1.1rem, 3vw, 1.75rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Vertical gold thread */
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  left: 30px;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(176, 141, 87, 0.55) 8%,
+    rgba(212, 175, 55, 0.65) 50%,
+    rgba(176, 141, 87, 0.55) 92%,
+    transparent
+  );
+}
+
+.timeline__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 62px minmax(0, 1fr);
+  align-items: start;
+  gap: 0.9rem;
+}
+
+.timeline__marker {
+  position: relative;
+  z-index: 1;
+  width: 62px;
+  filter: drop-shadow(0 8px 14px rgba(176, 141, 87, 0.25));
+}
+
+.timeline__card {
+  position: relative;
+  padding: clamp(1.1rem, 3vw, 1.6rem) clamp(1.1rem, 3.5vw, 1.9rem);
+  border: 1px solid rgba(176, 141, 87, 0.35);
+  border-radius: 3px;
+  background: linear-gradient(165deg, rgba(255, 253, 248, 0.96), rgba(253, 240, 232, 0.92));
+  box-shadow: 0 16px 40px -32px rgba(112, 47, 69, 0.55);
+  transition: box-shadow 0.5s var(--ease-soft), transform 0.5s var(--ease-soft);
+}
+
+.timeline__card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 44px -30px rgba(112, 47, 69, 0.5);
+}
+
+.timeline__time {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 0.35rem;
+}
+
+.timeline__name {
+  font-size: clamp(1.02rem, 0.86rem + 0.7vw, 1.28rem);
+  color: var(--burgundy);
+  line-height: 1.85;
+}
+
+.timeline__en {
+  margin-top: 0.1rem;
+  font-size: 0.88rem;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  color: var(--gold-deep);
+}
+
+.timeline__desc {
+  margin-top: 0.6rem;
+  font-size: 0.94rem;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+
+/* ── Desktop: alternate sides of the thread ─────────────── */
+@media (min-width: 880px) {
+  .timeline::before {
+    left: 50%;
+    translate: -0.5px 0;
+  }
+
+  .timeline__item {
+    grid-template-columns: 1fr 96px 1fr;
+    gap: 0;
+  }
+
+  .timeline__marker {
+    grid-column: 2;
+    justify-self: center;
+    width: 78px;
+  }
+
+  .timeline__card {
+    grid-column: 1;
+    margin-right: clamp(1rem, 3vw, 2rem);
+    text-align: right;
+  }
+
+  .timeline__item--right .timeline__card {
+    grid-column: 3;
+    margin-right: 0;
+    margin-left: clamp(1rem, 3vw, 2rem);
+    text-align: left;
+  }
+}
+
+@include m.reduced-motion {
+  .timeline__card:hover {
+    transform: none;
+  }
+}

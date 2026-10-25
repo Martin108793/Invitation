@@ -1,0 +1,55 @@
+<app-svg-sprite />
+<app-kbach-sprite />
+<app-lang-switch />
+
+<a class="skip-link" href="#main">{{ lg.t('skip') }}</a>
+
+@if (coverVisible()) {
+  <app-envelope (opened)="onOpened()" (dismissed)="onCoverDismissed()" />
+}
+
+<div class="page" [class.is-open]="opened()" [attr.inert]="opened() ? null : ''">
+  <main id="main">
+    <app-invitation />
+    <app-couple />
+    <app-wedding-details />
+    <app-wedding-schedule />
+    <app-gallery />
+    <app-venue />
+    <app-rsvp />
+  </main>
+
+  <footer class="site-footer">
+    <svg class="site-footer__band" aria-hidden="true" preserveAspectRatio="none">
+      <rect width="100%" height="16" fill="url(#pat-band-arch)" />
+    </svg>
+    <div class="shell site-footer__inner">
+      <img
+        class="site-footer__emblem"
+        src="images/frame/emblem-paper-1024.webp"
+        srcset="images/frame/emblem-paper-640.webp 221w, images/frame/emblem-paper-1024.webp 354w"
+        sizes="220px"
+        width="354"
+        height="364"
+        [alt]="w.monogram.left + ' & ' + w.monogram.right + ' monogram'"
+        loading="lazy"
+        decoding="async"
+      />
+
+      <p class="site-footer__khmer khmer-display">សូមអរគុណ</p>
+      <p class="site-footer__thanks">{{ w.messages.closing }}</p>
+      <p class="site-footer__signoff">{{ w.messages.closingSignoff }}</p>
+      <p class="site-footer__names">{{ w.couple.shortNames }}</p>
+      <p class="site-footer__date">{{ w.details.dateLabel }} · {{ w.venue.name }}</p>
+
+      <div class="site-footer__rule" aria-hidden="true"><span></span></div>
+      <p class="site-footer__fine">
+        {{ lg.t('footer.fine', { date: w.details.dateLabel }) }}
+      </p>
+    </div>
+  </footer>
+</div>
+
+@if (opened()) {
+  <app-music-player />
+}

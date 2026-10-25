@@ -1,0 +1,165 @@
+/* Artwork is 1024 × 1536. Every position below is a % of that canvas. */
+:host {
+  display: block;
+  width: 100%;
+}
+
+.frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1024 / 1536;
+  container-type: size;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--blush) linear-gradient(180deg, #fbe3e2 0%, #fdeee8 34%, var(--cream) 100%);
+  border-radius: 2px;
+  box-shadow:
+    0 46px 90px -46px rgba(89, 64, 47, 0.5),
+    0 0 0 1px rgba(184, 134, 67, 0.3);
+}
+
+.frame__art,
+.frame__emblem {
+  position: absolute;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+.frame__art {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Emblem: 387 × 390 px box at (319, 41) in the artwork. */
+.frame__emblem {
+  z-index: 2;
+  left: 31.15%;
+  top: 2.67%;
+  width: 37.8%;
+  height: 25.39%;
+  transform-origin: 50% 55%;
+}
+
+.frame__emblem img {
+  width: 100%;
+  height: 100%;
+}
+
+/* A slow band of light that crosses the gold, clipped to the emblem's shape. */
+.frame__sheen {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.frame__sheen::before {
+  content: '';
+  position: absolute;
+  inset: -10% auto -10% 0;
+  width: 42%;
+  transform: translateX(-130%) skewX(-18deg);
+  background: linear-gradient(90deg, transparent, rgba(255, 253, 249, 0.75), transparent);
+  mix-blend-mode: soft-light;
+  animation: frame-sheen 9s ease-in-out 3.2s infinite;
+  will-change: transform;
+}
+
+.frame__petals {
+  z-index: 3;
+  /* petals fall the height of the card, not the height of the screen */
+  --fall: 108cqh;
+}
+
+/* The ivory centre between the side blossoms: x 23.5–76.5 %, y 28.5–85 % */
+.frame__panel {
+  position: absolute;
+  z-index: 5;
+  left: 23.5%;
+  right: 23.5%;
+  top: 28.5%;
+  bottom: 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-width: 0;
+}
+
+/* ── Opening sequence (only when [intro] is on) ─────────────
+   0.0 s  paper tone
+   0.1 s  painted card opens outward from behind the emblem
+   0.9 s  emblem fades in and settles to full size
+   1.5 s+ text rises (the cover staggers its own lines)         */
+:host(.has-intro) .frame__art {
+  animation:
+    frame-open 2s var(--ease-out-quint) 0.1s both,
+    frame-settle 2.6s var(--ease-out-quint) 0.1s both;
+}
+
+:host(.has-intro) .frame__emblem {
+  animation: frame-emblem 1.3s var(--ease-out-quint) 0.9s both;
+}
+
+@keyframes frame-open {
+  from {
+    clip-path: ellipse(0% 0% at 50% 16%);
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  to {
+    clip-path: ellipse(135% 100% at 50% 16%);
+    opacity: 1;
+  }
+}
+
+@keyframes frame-settle {
+  from {
+    transform: scale(1.04);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes frame-emblem {
+  from {
+    opacity: 0;
+    transform: scale(0.88);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes frame-sheen {
+  0%,
+  62%,
+  100% {
+    transform: translateX(-130%) skewX(-18deg);
+  }
+  84% {
+    transform: translateX(330%) skewX(-18deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host(.has-intro) .frame__art,
+  :host(.has-intro) .frame__emblem {
+    animation: none;
+  }
+
+  .frame__sheen {
+    display: none;
+  }
+}

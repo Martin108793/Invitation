@@ -1,0 +1,145 @@
+<section class="section rsvp" id="rsvp" aria-labelledby="rsvp-title">
+  <div class="shell rsvp__shell">
+    <app-section-heading
+      [eyebrow]="lg.t('rsvp.eyebrow')"
+      khmerTitle="សូមឆ្លើយតប"
+      [title]="lg.t('rsvp.title')"
+      titleId="rsvp-title"
+      [subtitle]="lg.t('rsvp.subtitle')"
+      divider="lotus"
+    />
+
+    <div class="rsvp__card panel panel--corners" appReveal>
+      @if (state() !== 'done') {
+        <form class="form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+          <div class="field">
+            <label class="field__label" for="rsvp-name">
+              {{ lg.t('rsvp.name') }} <span class="field__req" aria-hidden="true">*</span>
+            </label>
+            <input
+              id="rsvp-name"
+              class="field__input"
+              type="text"
+              formControlName="name"
+              autocomplete="name"
+              [placeholder]="lg.t('rsvp.namePh')"
+              [attr.aria-invalid]="invalid('name')"
+              [attr.aria-describedby]="invalid('name') ? 'rsvp-name-error' : null"
+            />
+            @if (invalid('name')) {
+              <p class="field__error" id="rsvp-name-error" role="alert">
+                {{ lg.t('rsvp.nameErr') }}
+              </p>
+            }
+          </div>
+
+          <fieldset class="field field--choice">
+            <legend class="field__label">{{ lg.t('rsvp.join') }}</legend>
+            <div class="choice-row">
+              <label class="choice" [class.is-active]="form.controls.attendance.value === 'accept'">
+                <input type="radio" formControlName="attendance" value="accept" />
+                <span class="choice__mark" aria-hidden="true"></span>
+                <span class="choice__text">
+                  <strong>{{ lg.t('rsvp.accept') }}</strong>
+                  <em>{{ lg.t('rsvp.acceptSub') }}</em>
+                </span>
+              </label>
+
+              <label class="choice" [class.is-active]="form.controls.attendance.value === 'decline'">
+                <input type="radio" formControlName="attendance" value="decline" />
+                <span class="choice__mark" aria-hidden="true"></span>
+                <span class="choice__text">
+                  <strong>{{ lg.t('rsvp.decline') }}</strong>
+                  <em>{{ lg.t('rsvp.declineSub') }}</em>
+                </span>
+              </label>
+            </div>
+          </fieldset>
+
+          @if (attending()) {
+            <div class="field field--guest">
+              <label class="field__label" for="rsvp-guests">{{ lg.t('rsvp.guestsLabel') }}</label>
+              <select id="rsvp-guests" class="field__input field__select" formControlName="attendees">
+                @for (n of attendeesOptions; track n) {
+                  <option [value]="n">{{ lg.num(n) }} {{ lg.t(n === 1 ? 'rsvp.guest' : 'rsvp.guests') }}</option>
+                }
+              </select>
+              <p class="field__hint">{{ lg.t('rsvp.guestsHint', { max: lg.num(config.maxAttendees) }) }}</p>
+            </div>
+          }
+
+          <div class="field">
+            <label class="field__label" for="rsvp-message">
+              {{ lg.t('rsvp.note') }} <span class="field__optional">{{ lg.t('rsvp.optional') }}</span>
+            </label>
+            <textarea
+              id="rsvp-message"
+              class="field__input field__textarea"
+              rows="3"
+              formControlName="message"
+              maxlength="500"
+              [placeholder]="lg.t('rsvp.notePh')"
+              [attr.aria-invalid]="invalid('message')"
+            ></textarea>
+            <p class="field__hint">{{ lg.num(form.controls.message.value.length) }} / {{ lg.num(500) }}</p>
+          </div>
+
+          <div class="honeypot" aria-hidden="true">
+            <label for="rsvp-website">Website</label>
+            <input id="rsvp-website" type="text" formControlName="website" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <button class="btn btn--gold btn--block" type="submit" [disabled]="state() === 'sending'">
+            @if (state() === 'sending') {
+              <span class="spinner" aria-hidden="true"></span>
+              {{ lg.t('rsvp.sending') }}
+            } @else {
+              {{ lg.t('rsvp.send') }}
+            }
+          </button>
+
+          @if (state() === 'error' && outcome(); as problem) {
+            <p class="form__error" role="alert">{{ problem.message }}</p>
+          }
+
+          <p class="form__fine">{{ config.deadlineLabel }}</p>
+
+          @if (!onlineStorage) {
+            <p class="form__note">
+              <strong>{{ lg.t('rsvp.please') }}</strong> {{ lg.t('rsvp.storage') }}
+            </p>
+          }
+        </form>
+      } @else {
+        <div class="done" role="status">
+          <span class="done__mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M4 12.5l5 5L20 6.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+
+          <h3 class="done__title display">{{ lg.t('rsvp.thank') }}{{ response()?.name ? ', ' + response()!.name : '' }}</h3>
+          <p class="done__summary">{{ attendanceSummary }}</p>
+
+          @if (outcome()?.message) {
+            <p class="done__message">{{ outcome()!.message }}</p>
+          }
+
+          @if (outcome()?.stored === 'device') {
+            <a class="btn btn--gold" [href]="shareLink()" target="_blank" rel="noopener noreferrer">
+              {{ lg.t('rsvp.sendDirect') }}
+            </a>
+          }
+
+          @if (response()?.message) {
+            <blockquote class="done__quote">“{{ response()!.message }}”</blockquote>
+          }
+
+          <button type="button" class="btn btn--ghost btn--sm" (click)="reset()">
+            {{ lg.t('rsvp.another') }}
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+</section>

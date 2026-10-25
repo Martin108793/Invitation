@@ -1,0 +1,3 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96"><g fill="none" stroke="#B88643" stroke-opacity=".16" stroke-width="1">
+<path d="M48 6L90 48L48 90L6 48Z"/><path d="M48 22L74 48L48 74L22 48Z"/><circle cx="48" cy="48" r="4"/>
+<path d="M0 0l8 8M96 0l-8 8M0 96l8-8M96 96l-8-8"/></g><g fill="#EBA3B2" fill-opacity=".12"><circle cx="0" cy="0" r="5"/><circle cx="96" cy="0" r="5"/><circle cx="0" cy="96" r="5"/><circle cx="96" cy="96" r="5"/><circle cx="48" cy="48" r="9"/></g></svg>
